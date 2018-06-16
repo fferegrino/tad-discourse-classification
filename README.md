@@ -3,7 +3,7 @@ Download this report in [PDF](https://github.com/fferegrino/tad-discourse-classi
 
 ## Q1. Experimenting with Thread Subreddit Classification
 
-After running several experiments with combination of text vectorizers and classifiers, the values summarized in the Table 1 were found. To my surprise, the difference between any of the combinations involving the Logistic Regression classifier performed tremendously better than any of the others, including the SVC classifier, which in certain conditions performed as bad as one of the dummy classifiers.
+After running several experiments with a combination of text vectorizers and classifiers, the values summarised in Table 1 were found. To my surprise, the difference between any of the combinations involving the Logistic Regression classifier performed tremendously better than any of the others, including the SVC classifier, which in certain conditions performed as bad as one of the dummy classifiers.
 
 | **Classifier** | **Vectorizer** | **Accuracy** | **Precision** | **Recall** | **F-1** |
 | --- | --- | --- | --- | --- | --- |
@@ -46,7 +46,7 @@ Table 2. Confusion matrix for the combination LogisticRegression-CountVectorizer
 ![Table 3](https://i.imgur.com/LlPA7HS.png)   
 Table 3. F-1 scores for each subreddit under the combination LogisticResgession-CountVectorizer
 
-An idea I have about why the CountVectorizer outperformed the rest of the document is that there some words that are words that are useful and lose influence when they are vectorised using the TfidfVectorizer and thus, this represent a degradation in the classifier performance.
+An idea I have about why the CountVectorizer outperformed the rest of the document is that there some words that are words that are useful and lose influence when they are vectorised using the TfidfVectorizer, and thus, this represents a degradation in the classifier performance.
 
 ## Q2. Parameter tunning
 
@@ -70,11 +70,11 @@ For TfidfVectorizer:
 - `ngram\_range = (1, 1)`
 - `sublinear\_tf = True`
 
-It may be the case that there is no need to involve a lot of features for this text classification task. The vectorizer also requires the sublinear parameter to be set to true and this causes highly frequent words to decrease their influence.
+It may be the case that there is no need to involve a lot of features for this text classification task. The vectorizer also requires the sublinear parameter to be set to true, and this causes highly frequent words to decrease their influence.  
 
 ## Q3. Comment Discourse Classification
 
-The performance of the discourse type classification is generally bad, as shown in Table 6. When it comes to classify, one may think that a single vector representing a post is not enough to generate predictions, and it may be necessary to add more features for this task.
+The performance of the discourse type classification is generally bad, as shown in Table 6. When it comes to classifying, one may think that a single vector representing a post is not enough to generate predictions, and it may be necessary to add more features to this task.
 
 | **Accuracy** | **F1** | **Precision** | **Recall** |
 | --- | --- | --- | --- |
@@ -99,23 +99,23 @@ Table 6. Macro F1, Precision and Recall at a class level  for the combination Lo
 
 ## Q4. Adding features
 
-To improve the performance of the classifier six additional features were taken into account and fed into the LogisticRegression classifier. I&#39;ve chosen these features due to my experience using the web site with the hope that the classifier will be able to pick up the data and will be able to gain meaningful insights from it:
+To improve the performance of the classifier six additional features were taken into account and fed into the LogisticRegression classifier. I have chosen these features due to my experience using the website with the hope that the classifier will be able to pick up the data and will be able to gain meaningful insights from it:
 
-- **Content + Punctuation** : Including punctuation as tokens. This is one of the easiest choices. In English, punctuation is one of the best indicator of what type of discourse we are dealing with, by removing signs (such as &quot;?&quot;) we had to rely to other features to discover if the text we are analysing is a question or other type of discourse. In this case, a custom stop word set was used, such set does not contain words like &quot;who&quot;, &quot;where&quot;, &quot;I&quot; and negative contractions.
+- **Content + Punctuation** : Including punctuation as tokens. This is one of the easiest choices. In English, punctuation is one of the best indicators of what type of discourse we are dealing with, by removing signs (such as &quot;?&quot;) we had to rely on other features to discover if the text we are analysing is a question or other type of discourse. In this case, a custom stop word set was used, such set does not contain words like &quot;who&quot;, &quot;where&quot;, &quot;I&quot; and negative contractions.
 
-- **Structure** : Depth of the comment. While browsing subreddits you can realize that most of the times the comments that are a direct response are highly related to the post in question, being those answers or opinions, while the comments that are a response to other comments tend to vary in nature, with disagreement, agreement, elaboration appreciation being the most common. For the depth of the comment I&#39;m just considering the raw depth, without normalization as in my experience the depth of the thread usually does not go above 10 posts.
+- **Structure** : Depth of the comment. While browsing subreddits you can realize that most of the times the comments that are a direct response are highly related to the post in question, being those answers or opinions, while the comments that are a response to other comments tend to vary in nature, with disagreement, agreement, elaboration appreciation being the most common. For the depth of the comment I&#39;m just considering the raw depth, without normalisation as in my experience the depth of the thread usually does not go above 10 posts.
 
-- **Author** : is this the author of the original post? An author is likely to post in its own post to clarify something via an elaboration, agree or disagree or even to appreciate an answer to something they have posted, the information can be used to improve our classification task. This is just a binary flag that is set to 1 when the post&#39;s author is the same as the original thread author.
+- **Author** : Is this the author of the original post? An author is likely to post in its own post to clarify something via an elaboration, agree or disagree or even to appreciate an answer to something they have posted, the information can be used to improve our classification task. This is just a binary flag that is set to 1 when the post&#39;s author is the same as the original thread author.
 
-- **Thread features** : number of comments in a discussion. The number of the comments can also be an indicator of a post being of a certain type, posts that are questions usually get a relatively small number of answers than an announcement, may get. In this case the total length of the thread is considered as an integer value.
+- **Thread features** : The number of comments in a discussion. The number of the comments can also be an indicator of a post being of a certain type, posts that are questions usually get a relatively small number of answers than an announcement, may get. In this case, the total length of the thread is considered as an integer value.
 
-- **Community** : where did this post came from? The subreddit a given post may be one of the most important factors to consider when classifying. The first post in a subreddit like _explainlikeimfive_ and _jailbreak_ are most likely to be questions, whereas the first level posts tend to be answers. On the other hand, posts in subreddits like _atheism_ or _relationships_ are most likely elaboration.  To input this feature into the model, the values were one-hot encoded.
+- **Community** : Where did this post come from? The subreddit for a given post may be one of the most important factors to consider when classifying. The first post in a subreddit like _explainlikeimfive_ and _jailbreak_ are most likely to be questions, whereas the first level posts tend to be answers. On the other hand, posts in subreddits like _atheism_ or _relationships_ are most likely elaboration.  To input this feature into the model the values were one-hot encoded.  
 
 - **Word2Vec / NLP** : Parts of the speech. The structure of the contents of a post can be used to determine what kind of discourse is. For example, an appreciation post may contain more adjectives while a question may have more wh-determiners or wh-pronouns to name a few characteristics. To consider this feature, first I converted the body of each post into its POS representation, then a TfidfVectorizer was used to obtain a vector representation of these POS sentences.
 
-The results of running several classification experiments are summarized in the Table 6, in there it is possible to see that the huge improvement in the classification (in terms of the F1 score) is provided by the use of the previously mentioned &quot;Content + Punctuation&quot; features. It is possible to say this as there is a significant decrease when we remove it from the classification.
+The results of running several classification experiments are summarised in Table 6, in there it is possible to see that the huge improvement in the classification (in terms of the F1 score) is provided by the use of the previously mentioned &quot;Content + Punctuation&quot; features. It is possible to say this as there is a significant decrease when we remove it from the classification.  
 
-On the other hand, it is also possible to see that some of the features help in increasing the overall F1 score but decrease either recall or precision. As a final note, I can conclude that the use of all six features contributed in increasing the performance of the classifier.
+On the other hand, it is also possible to see that some of the features help in increasing the overall F1 score but decrease either recall or precision. As a final note, I can conclude that the use of all six features contributed to increasing the performance of the classifier.
 
 | **Model** | **Accuracy** | **F1** | **Precision** | **Recall** |
 | --- | --- | --- | --- | --- |
